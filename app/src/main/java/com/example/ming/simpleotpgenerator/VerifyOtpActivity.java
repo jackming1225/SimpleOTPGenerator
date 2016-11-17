@@ -36,9 +36,10 @@ public class VerifyOtpActivity extends AppCompatActivity {
         final String SessionId = getIntent().getExtras().getString("sessionID");
 
         statusText = (TextView) findViewById(R.id.statusText);
-        otpEnter = (EditText) findViewById(R.id.otpET);
-        verifyOTP = (Button) findViewById(R.id.verifyB);
 
+        otpEnter = (EditText) findViewById(R.id.otpET);
+
+        verifyOTP = (Button) findViewById(R.id.verifyB);
         verifyOTP.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

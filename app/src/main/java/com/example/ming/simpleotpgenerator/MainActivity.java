@@ -26,8 +26,8 @@ public class MainActivity extends AppCompatActivity {
     EditText number;
     TextView returnText, returnedMessage;
     Button genOTP;
-    private String status;
-    private String sessionId;
+    private String responseStatus;
+    private String sessionIdResponse;
     private int requestCode;
     private String messageReturned;
 
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    String json_string = "";
+    String otpGenerateResponse = "";
 
 
     public String JsonTask(final String number) {
@@ -137,29 +137,29 @@ public class MainActivity extends AppCompatActivity {
             @Override
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
-                json_string = result;
+                otpGenerateResponse = result;
 
-                returnText.setText(json_string);
+                returnText.setText(otpGenerateResponse);
 
-                getSessionId(json_string);
+                gettingSessionId(otpGenerateResponse);
 
 
             }
         }.execute();
-        return json_string;
+        return otpGenerateResponse;
     }
 
-    private void getSessionId(String json_string) {
+    private void gettingSessionId(String otpGenerateResponse) {
 
         try {
-            JSONArray jsonArray = new JSONArray("[" + json_string + "]");
+            JSONArray jsonArray = new JSONArray("[" + otpGenerateResponse + "]");
 
             for (int i = 0; i < jsonArray.length(); i++) {
 
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-                status = jsonObject.getString("Status");
-                sessionId = jsonObject.getString("Details");
+                responseStatus = jsonObject.getString("Status");
+                sessionIdResponse = jsonObject.getString("Details");
 
 
             }
@@ -168,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        startVerifyActivity(sessionId);
+        startVerifyActivity(sessionIdResponse);
 
 
     }
