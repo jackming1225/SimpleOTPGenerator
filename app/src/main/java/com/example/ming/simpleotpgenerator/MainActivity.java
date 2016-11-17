@@ -17,22 +17,19 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLEncoder;
-import java.util.Iterator;
-import java.util.Vector;
 
 public class MainActivity extends AppCompatActivity {
 
     EditText number;
-    TextView returnText;
+    TextView returnText, returnedMessage;
     Button genOTP;
     private String status;
     private String sessionId;
+    private int requestCode;
+    private String messageReturned;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
         number = (EditText) findViewById(R.id.numberET);
         genOTP = (Button) findViewById(R.id.generateB);
+        returnedMessage = (TextView) findViewById(R.id.messageReturnedT);
         returnText = (TextView) findViewById(R.id.returnText);
 
         genOTP.setOnClickListener(new View.OnClickListener() {
@@ -63,9 +61,19 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, VerifyOtpActivity.class);
         intent.putExtra("sessionID", getSessionId);
-        startActivity(intent);
+        startActivityForResult(intent, requestCode);
     }
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == requestCode && resultCode == RESULT_OK && data != null) {
+            messageReturned = data.getExtras().getString("message");
+            returnedMessage.setText(messageReturned);
+        }
+    }
 
     String json_string = "";
 
@@ -144,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
     private void getSessionId(String json_string) {
 
         try {
-            JSONArray jsonArray = new JSONArray("["+json_string+"]");
+            JSONArray jsonArray = new JSONArray("[" + json_string + "]");
 
             for (int i = 0; i < jsonArray.length(); i++) {
 
