@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void generateOTP(String phoneNumber) {
 
-        JsonTask(phoneNumber);
+        generatingOtpJsonTask(phoneNumber);
 
 
     }
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
     String otpGenerateResponse = "";
 
 
-    public String JsonTask(final String number) {
+    public String generatingOtpJsonTask(final String number) {
 
         new AsyncTask<String, String, String>() {
 

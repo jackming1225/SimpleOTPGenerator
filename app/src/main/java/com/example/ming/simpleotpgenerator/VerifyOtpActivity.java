@@ -51,15 +51,15 @@ public class VerifyOtpActivity extends AppCompatActivity {
 
     private void verifyingOTP(String getOTP, String SessionID) {
 
-        JsonTask(getOTP, SessionID);
+        verifyingOtpJsonTask(getOTP, SessionID);
 
     }
 
 
-    String json_string = "";
+    String verifyJsonString = "";
 
 
-    public String JsonTask(final String getOtp, final String SessionI) {
+    public String verifyingOtpJsonTask(final String getOtp, final String SessionI) {
 
         new AsyncTask<String, String, String>() {
 
@@ -118,12 +118,12 @@ public class VerifyOtpActivity extends AppCompatActivity {
             @Override
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
-                json_string = result;
+                verifyJsonString = result;
                 //statusText.setText(result);
-                getStatusResult(json_string);
+                getStatusResult(verifyJsonString);
             }
         }.execute();
-        return json_string;
+        return verifyJsonString;
     }
 
     private void getStatusResult(String json_string) {
